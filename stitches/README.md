@@ -12,3 +12,8 @@ npx create-next-app --example with-stitches
 ```sh
 yarn add @stitches/react
 ```
+
+## Basic process
+
+- [x] Add Configure file : `stitches.config.ts`
+- [x] Add SSR settings in `_document.tsx`
