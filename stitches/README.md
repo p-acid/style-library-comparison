@@ -1,4 +1,4 @@
-# Install
+# Setting
 
 ```sh
 # Short way
