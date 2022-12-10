@@ -17,7 +17,8 @@ yarn add @stitches/react
 
 - [x] Add Configure file : `stitches.config.ts`
 - [x] Add SSR settings in `_document.tsx`
-  > 이하 한글로 작성. 원문은 [해당 링크](https://stitches.dev/docs/installation) 확인
+
+> 이하 한글로 작성. 원문은 [해당 링크](https://stitches.dev/docs/installation) 확인
 
 # Styling
 
