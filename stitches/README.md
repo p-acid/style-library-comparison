@@ -63,7 +63,7 @@ const Button = styled.button`
 - 위 작성 방식을 확인해보면 **객체 형식**으로 작성된 것을 확인할 수 있음
   - 문자열 구문을 채택하는 타 라이브러리와 구분됨을 확인 가능
 
-### Target a Stitches component(Stitches 컴포넌트 지정)
+## Target a Stitches component(Stitches 컴포넌트 지정)
 
 ```tsx
 const Icon = styled("svg", {
@@ -88,7 +88,7 @@ const Button = styled("button", {
 );
 ```
 
-### Target a React component(리액트 컴포넌트 지정)
+## Target a React component(리액트 컴포넌트 지정)
 
 - `toString` 메서드를 활용하여 추가 가능
   - 의도한 셀렉터와 매칭하기 위해 필요
@@ -114,7 +114,7 @@ const Button = styled('button', {
 () => <Button>Button <RightArrow /></Button>;
 ```
 
-### Import rules(`@import`)
+## Import rules(`@import`)
 
 - `globalCss` 에서 사용 가능
 
@@ -125,7 +125,7 @@ const globalStyles = globalCss({
 });
 ```
 
-### Font face rules(`@font-face`)
+## Font face rules(`@font-face`)
 
 - `globalCss` 에서 사용 가능
 
@@ -151,7 +151,7 @@ const globalStyles = globalCss({
 });
 ```
 
-### Supports rules(`@supports`)
+## Supports rules(`@supports`)
 
 - `globalCss`, `styled`, `css` 에서 사용 가능
 
@@ -171,7 +171,7 @@ const Grid = styled("div", {
 });
 ```
 
-### Token aware values(토큰 사용)
+## Token aware values(토큰 사용)
 
 - 속성과 토큰을 매핑하여 `$` 접두사를 통해 토큰 값을 사용할 수 있음
 
@@ -191,7 +191,7 @@ const Button = styled("button", {
 });
 ```
 
-### Token aware values(토큰 사용)
+## Token aware values(토큰 사용)
 
 - 속성과 토큰을 매핑하여 `$` 접두사를 통해 토큰 값을 사용할 수 있음
 - 지역 스코프로 지정 가능
@@ -224,7 +224,7 @@ const Button = styled("button", {
 });
 ```
 
-### Theme specific styles(테마별 스타일)
+## Theme specific styles(테마별 스타일)
 
 - 동적으로 생성된 테마별로 스타일링 가능
 - 테마는 클래스명을 반환하기에 `.` 접두사를 꼭 붙여서 사용
@@ -255,7 +255,7 @@ const Button = styled("button", {
 );
 ```
 
-## Variants
+# Variants ("분기" 쯤으로 해석)
 
 `variants` 라는 키 값을 통해 분기별 CSS를 지정할 수 있습니다.
 
@@ -285,7 +285,7 @@ const Button = styled("button", {
 () => <Button color="violet">Button</Button>;
 ```
 
-### Multiple variants
+## Multiple variants(복수 분기)
 
 ```tsx
 const Button = styled("button", {
@@ -320,7 +320,7 @@ const Button = styled("button", {
 );
 ```
 
-### Boolean variants
+## Boolean variants(불리언 분기)
 
 - `true` 키를 통해 `Boolean` 값 핸들링 가능
 
@@ -340,7 +340,7 @@ const Button = styled("button", {
 () => <Button outlined>Button</Button>;
 ```
 
-### Compound variants
+## Compound variants(분기 내 스타일 합성)
 
 - 다른 조합을 기반으로 해당 조합의 스타일링을 설정해야 할 때, `compoundVariants` 를 사용하여 가능
 
@@ -391,7 +391,7 @@ const Button = styled("button", {
 );
 ```
 
-### Default variants
+## Default variants(기본 분기)
 
 - `defaultVariants` 를 통해 기본 `variants` 설정 가능
 
@@ -414,7 +414,7 @@ const Button = styled('button', {
 () => <Button>Button</Button>
 ```
 
-### Responsive variants
+## Responsive variants(반응형 분기)
 
 - 다양한 `breakpoints` 마다 `variants` 를 설정할 수도 있음
 - `@initial` 을 통해 기본 `variants` 를 설정해주어야 한다.
@@ -442,3 +442,159 @@ const Button = styled("button", {
   </Button>
 );
 ```
+
+# Responsive
+
+`createStitches` 내 `media` 키로 정의 가능
+
+```ts
+export const { styled, css } = createStitches({
+  media: {
+    bp1: "(min-width: 640px)",
+    bp2: "(min-width: 768px)",
+    bp3: "(min-width: 1024px)",
+  },
+});
+```
+
+## Using breakpoints in the style objects(스타일 객체에서 반응형 설정)
+
+```tsx
+const Button = styled("button", {
+  // base styles
+
+  "@bp1": {
+    // Styles for bp1
+  },
+});
+```
+
+# Overriding Styles
+
+`css` prop를 통해 스타일 오버라이드 가능
+
+## The `css` prop
+
+- 모든 Stitches 컴포넌트는 `css` prop을 가지며, 이를 통해 오버라이드 가능
+- tokens, media queries, nesting, token-aware values 모두 사용 가능
+
+```tsx
+const Button = styled("button", {});
+
+() => (
+  <Button
+    css={{
+      borderRadius: "0",
+      "&:hover": {
+        backgroundColor: "black",
+        color: "white",
+      },
+    }}
+  >
+    Button
+  </Button>
+);
+```
+
+## Merging css prop on custom components(커스텀 컴포넌트에 css prop 병합)
+
+- `css` prop을 아래와 같이 병합 가능
+
+```tsx
+const PageTitle = styled("h1", {});
+
+function BlogTitle({ css, ...props }) {
+  return (
+    <PageTitle
+      css={{
+        ...css,
+        "@bp1": {
+          ...css["@bp1"],
+          lineHeight: 1.2,
+        },
+        "@bp2": {
+          ...css["@bp2"],
+          lineHeight: 1.4,
+        },
+      }}
+      {...props}
+    />
+  );
+}
+
+() => (
+  <BlogTitle
+    css={{
+      marginBottom: 10,
+      "@bp1": { marginBottom: 20 },
+      "@bp2": { marginBottom: 30 },
+    }}
+  >
+    Blog title
+  </BlogTitle>
+);
+```
+
+## Overriding the HTML tag(HTML 오버라이드)
+
+- `as` prop을 통해 HTML 오버라이드 가능
+
+```tsx
+const Button = styled("button", {});
+
+() => (
+  <Button as="a" href="#">
+    Button
+  </Button>
+);
+```
+
+# Framework Agnostic Core API
+
+> 프레임워크에 구애 받지 않는 방식이라고 함. React를 사용할 예정이기에 이는 제외
+> 확인을 원한다면 [다음 링크](https://stitches.dev/docs/framework-agnostic)로
+
+# Theme tokens(테마 토큰)
+
+> 앞에서 사용했던 토큰에 대한 내용. 속성 매핑과 관련된 내용은 [다음 링크](https://stitches.dev/docs/tokens)로
+
+# Utils
+
+여러가지 유틸을 추가하여 효과적으로 스타일링 가능
+
+```tsx
+export const { styled, css } = createStitches({
+  utils: {
+    // A property for applying width/height together
+    size: (value) => ({
+      width: value,
+      height: value,
+    }),
+
+    // A property to apply linear gradient
+    linearGradient: (value) => ({
+      backgroundImage: `linear-gradient(${value})`,
+    }),
+
+    // An abbreviated property for border-radius
+    br: (value) => ({
+      borderRadius: value,
+    }),
+  },
+});
+```
+
+```tsx
+const Box = styled("div", {
+  size: "200px",
+  linearGradient: "19deg, #21D4FD 0%, #B721FF 100%",
+  br: "$round",
+});
+```
+
+# SSR
+
+`getCssText` 함수를 통해 가능
+
+- 해당 함수는 SSR에서 필요한 CSS를 전달함
+- 보다 나은 SSR을 위해 `style` 태그에 `id="stitches"` 를 전달하는 것을 권장
