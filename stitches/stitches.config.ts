@@ -1,6 +1,6 @@
 import { createStitches } from "@stitches/react";
 
-export const { styled, getCssText } = createStitches({
+export const { styled, createTheme, getCssText } = createStitches({
   /**
    * 테마 데이터
    */
@@ -45,7 +45,7 @@ export const { styled, getCssText } = createStitches({
   /**
    * 전역 충돌을 피하기 위한 클래스명 접두사
    */
-  prefix: "radix",
+  // prefix: "radix",
   /**
    * 테마 토큰에 대한 CSS 요소 매핑
    */
