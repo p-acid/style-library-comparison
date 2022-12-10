@@ -1,6 +1,6 @@
 # Why we use stitches 🖊️
 
-## Differences
+## Environment
 
 | Package           | Version |
 | ----------------- | ------- |

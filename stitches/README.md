@@ -65,7 +65,7 @@ const Button = styled.button`
 
 ### Target a Stitches component(Stitches 컴포넌트 지정)
 
-```ts
+```tsx
 const Icon = styled("svg", {
   display: "inline-block",
   marginLeft: "5px",
@@ -93,7 +93,7 @@ const Button = styled("button", {
 - `toString` 메서드를 활용하여 추가 가능
   - 의도한 셀렉터와 매칭하기 위해 필요
 
-```ts
+```tsx
 const RightArrow = () => (
   <svg className="right-arrow" ... />
 );
@@ -118,7 +118,7 @@ const Button = styled('button', {
 
 - `globalCss` 에서 사용 가능
 
-```ts
+```tsx
 const globalStyles = globalCss({
   "@import": "custom.css", // single
   "@import": ["custom1.css", "custom2.css"], // multiple
@@ -129,7 +129,7 @@ const globalStyles = globalCss({
 
 - `globalCss` 에서 사용 가능
 
-```ts
+```tsx
 const globalStyles = globalCss({
   // single
   "@font-face": {
@@ -155,7 +155,7 @@ const globalStyles = globalCss({
 
 - `globalCss`, `styled`, `css` 에서 사용 가능
 
-```ts
+```tsx
 const globalStyles = globalCss({
   "@supports (display: grid)": {
     body: {
@@ -175,7 +175,7 @@ const Grid = styled("div", {
 
 - 속성과 토큰을 매핑하여 `$` 접두사를 통해 토큰 값을 사용할 수 있음
 
-```ts
+```tsx
 import { createStitches } from "@stitches/react";
 
 const { styled } = createStitches({
@@ -197,7 +197,7 @@ const Button = styled("button", {
 - 지역 스코프로 지정 가능
 - 스케일 접두사로도 지정 가능
 
-```ts
+```tsx
 import { createStitches } from "@stitches/react";
 
 const { styled } = createStitches({
@@ -229,7 +229,7 @@ const Button = styled("button", {
 - 동적으로 생성된 테마별로 스타일링 가능
 - 테마는 클래스명을 반환하기에 `.` 접두사를 꼭 붙여서 사용
 
-```ts
+```tsx
 import { createStitches } from "@stitches/react";
 
 const { styled, createTheme } = createStitches({
@@ -252,5 +252,193 @@ const Button = styled("button", {
   <div className={myTheme}>
     <Button>Button</Button>
   </div>
+);
+```
+
+## Variants
+
+`variants` 라는 키 값을 통해 분기별 CSS를 지정할 수 있습니다.
+
+```tsx
+const Button = styled("button", {
+  // base styles
+
+  variants: {
+    color: {
+      violet: {
+        backgroundColor: "blueviolet",
+        color: "white",
+        "&:hover": {
+          backgroundColor: "darkviolet",
+        },
+      },
+      gray: {
+        backgroundColor: "gainsboro",
+        "&:hover": {
+          backgroundColor: "lightgray",
+        },
+      },
+    },
+  },
+});
+
+() => <Button color="violet">Button</Button>;
+```
+
+### Multiple variants
+
+```tsx
+const Button = styled("button", {
+  // base styles
+
+  variants: {
+    color: {
+      violet: { ...violetStyles },
+      gray: { ...grayStyles },
+    },
+    size: {
+      small: {
+        fontSize: "13px",
+        height: "25px",
+        paddingRight: "10px",
+        paddingLeft: "10px",
+      },
+      large: {
+        fontSize: "15px",
+        height: "35px",
+        paddingLeft: "15px",
+        paddingRight: "15px",
+      },
+    },
+  },
+});
+
+() => (
+  <Button color="violet" size="large">
+    Button
+  </Button>
+);
+```
+
+### Boolean variants
+
+- `true` 키를 통해 `Boolean` 값 핸들링 가능
+
+```tsx
+const Button = styled("button", {
+  // base styles
+
+  variants: {
+    outlined: {
+      true: {
+        borderColor: "lightgray",
+      },
+    },
+  },
+});
+
+() => <Button outlined>Button</Button>;
+```
+
+### Compound variants
+
+- 다른 조합을 기반으로 해당 조합의 스타일링을 설정해야 할 때, `compoundVariants` 를 사용하여 가능
+
+```tsx
+const Button = styled("button", {
+  ...styles,
+
+  variants: {
+    color: {
+      violet: { ...violetStyles },
+      gray: { ...grayStyles },
+    },
+    outlined: {
+      true: { ...outlineVariants },
+    },
+  },
+
+  compoundVariants: [
+    {
+      color: "violet",
+      outlined: true,
+      css: {
+        color: "blueviolet",
+        borderColor: "darkviolet",
+        "&:hover": {
+          color: "white",
+        },
+      },
+    },
+    {
+      color: "gray",
+      outlined: true,
+      css: {
+        color: "gray",
+        borderColor: "lightgray",
+        "&:hover": {
+          color: "black",
+        },
+      },
+    },
+  ],
+});
+
+() => (
+  <Button color="violet" outlined>
+    Button
+  </Button>
+);
+```
+
+### Default variants
+
+- `defaultVariants` 를 통해 기본 `variants` 설정 가능
+
+```tsx
+const Button = styled('button', {
+  ...styles
+
+  variants: {
+    color: {
+      violet: { ...violetStyles },
+      gray: { ...grayStyles }
+    },
+  },
+
+  defaultVariants: {
+    color: 'violet'
+  }
+});
+
+() => <Button>Button</Button>
+```
+
+### Responsive variants
+
+- 다양한 `breakpoints` 마다 `variants` 를 설정할 수도 있음
+- `@initial` 을 통해 기본 `variants` 를 설정해주어야 한다.
+
+```tsx
+const Button = styled("button", {
+  // base styles
+
+  variants: {
+    color: {
+      violet: { ...violetStyles },
+      gray: { ...grayStyles },
+    },
+  },
+});
+
+() => (
+  <Button
+    color={{
+      "@initial": "gray",
+      "@bp1": "violet",
+    }}
+  >
+    Button
+  </Button>
 );
 ```

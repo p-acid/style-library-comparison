@@ -9,12 +9,28 @@ const myTheme = createTheme({
 });
 
 const Button = styled("button", {
-  color: "$colors$loContrast",
-  $$shadow: "blueviolet",
-  boxShadow: "0 0 0 3px $$shadow",
+  borderRadius: 16,
+  cursor: "pointer",
 
-  "&:hover": {
-    $$shadow: "green",
+  variants: {
+    color: {
+      violet: {
+        border: "3px solid blueviolet",
+
+        "&:hover": {
+          color: "white",
+          backgroundColor: "blueviolet",
+        },
+      },
+      green: {
+        border: "3px solid green",
+
+        "&:hover": {
+          color: "white",
+          backgroundColor: "green",
+        },
+      },
+    },
   },
 });
 
@@ -28,7 +44,8 @@ export default function Home() {
       <main className={myTheme}>
         <p>Paragraph</p>
         <span>Span</span>
-        <Button>Button</Button>
+        <Button color="violet">Button</Button>
+        <Button color="green">Button</Button>
       </main>
     </div>
   );
