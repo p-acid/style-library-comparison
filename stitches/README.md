@@ -20,6 +20,13 @@ yarn add @stitches/react
 
 > 이하 한글로 작성. 원문은 [해당 링크](https://stitches.dev/docs/installation) 확인
 
+## SSR
+
+`getCssText` 함수를 통해 가능
+
+- 해당 함수는 SSR에서 필요한 CSS를 전달함
+- 보다 나은 SSR을 위해 `style` 태그에 `id="stitches"` 를 전달하는 것을 권장
+
 # Styling
 
 ## Object syntax(객체 구문)
@@ -592,10 +599,3 @@ const Box = styled("div", {
   br: "$round",
 });
 ```
-
-# SSR
-
-`getCssText` 함수를 통해 가능
-
-- 해당 함수는 SSR에서 필요한 CSS를 전달함
-- 보다 나은 SSR을 위해 `style` 태그에 `id="stitches"` 를 전달하는 것을 권장
