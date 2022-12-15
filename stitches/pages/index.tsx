@@ -11,6 +11,7 @@ const myTheme = createTheme({
 const Button = styled("button", {
   borderRadius: 16,
   cursor: "pointer",
+  color: "$blue",
 
   variants: {
     color: {
@@ -44,6 +45,7 @@ export default function Home() {
       <main className={myTheme}>
         <p>Paragraph</p>
         <span>Span</span>
+        <Button>Button</Button>
         <Button color="violet">Button</Button>
         <Button color="green">Button</Button>
       </main>

@@ -11,6 +11,7 @@ export const { styled, createTheme, getCssText } = createStitches({
     colors: {
       hiContrast: "hsl(206,10%,5%)",
       loContrast: "white",
+      blue: "blue",
     },
     fontSizes: {
       1: "13px",
