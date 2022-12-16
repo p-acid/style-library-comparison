@@ -8,6 +8,10 @@ const myTheme = createTheme({
   },
 });
 
+const FunctionalComp = (props: any) => {
+  return <div {...props}></div>;
+};
+
 const Button = styled("button", {
   borderRadius: 16,
   cursor: "pointer",
@@ -35,6 +39,21 @@ const Button = styled("button", {
   },
 });
 
+const OverridedButton = styled(Button, {
+  backgroundColor: "red",
+});
+
+const OverridedFC = styled(FunctionalComp, {
+  background: "red",
+});
+
+const NestWrapper = styled("div", {
+  [`${Button}`]: {
+    color: "white",
+    background: "Blue",
+  },
+});
+
 export default function Home() {
   return (
     <div>
@@ -48,6 +67,11 @@ export default function Home() {
         <Button>Button</Button>
         <Button color="violet">Button</Button>
         <Button color="green">Button</Button>
+        <OverridedButton>Button</OverridedButton>
+        <NestWrapper>
+          <Button color="green">Button</Button>
+        </NestWrapper>
+        <OverridedFC>hello</OverridedFC>
       </main>
     </div>
   );
